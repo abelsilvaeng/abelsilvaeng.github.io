@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Abel da Silva Cruvinel">
+<meta property="og:description" content="Cientista de Dados Especialista: IA aplicada, engenharia de software, geotecnologias, transportes e recursos hídricos.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abelsilvaeng.github.io/">
+<title>Abel Cruvinel</title>
+<meta name="description" content="Abel da Silva Cruvinel. Cientista de Dados Especialista: IA aplicada, engenharia de software, geotecnologias, transportes e recursos hídricos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: folha técnica em camadas. Coluna de leitura com margem de metadados em mono à esquerda.
+   O topo sobrepõe três camadas do trabalho: relevo, rede e terminal. */
+:root {
+  --bg: #F1F3F2;
+  --surface: #E4E9E7;
+  --ink: #12201F;
+  --muted: #56645F;
+  --line: #C6D0CC;
+  --accent: #0D6A86;
+  --signal: #B4530F;
+  --contour: rgba(13, 106, 134, .20);
+  --contour-index: rgba(13, 106, 134, .40);
+  --edge: rgba(180, 83, 15, .38);
+  --term-bg: #12201F;
+  --term-fg: #CFE3DD;
+  --term-dim: #7E9690;
+
+  --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --step--1: .8125rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: 2.25rem;
+  --step-4: clamp(2.6rem, 7vw, 4.75rem);
+  --measure: 66ch;
+  --rail: 200px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1716; --surface: #15211F; --ink: #E2EAE7; --muted: #95A6A0; --line: #2A3A37;
+    --accent: #5BB9D3; --signal: #EE9A55;
+    --contour: rgba(91, 185, 211, .15); --contour-index: rgba(91, 185, 211, .32);
+    --edge: rgba(238, 154, 85, .40);
+    --term-bg: #08100F; --term-fg: #CFE3DD; --term-dim: #6F8781;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1716; --surface: #15211F; --ink: #E2EAE7; --muted: #95A6A0; --line: #2A3A37;
+  --accent: #5BB9D3; --signal: #EE9A55;
+  --contour: rgba(91, 185, 211, .15); --contour-index: rgba(91, 185, 211, .32);
+  --edge: rgba(238, 154, 85, .40);
+  --term-bg: #08100F; --term-fg: #CFE3DD; --term-dim: #6F8781;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.mono { font-family: var(--f-mono); font-size: var(--step--1); letter-spacing: .02em; }
+.label {
+  font-family: var(--f-mono); font-size: .75rem; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--muted);
+}
+
+/* ---------- Topo ---------- */
+.hero { position: relative; border-bottom: 1px solid var(--line); overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero .wrap {
+  position: relative;
+  padding-block: clamp(52px, 9vw, 104px) clamp(40px, 7vw, 72px);
+  display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 40px; align-items: end;
+}
+.coord { color: var(--signal); }
+h1 {
+  font-family: var(--f-display);
+  font-size: var(--step-4);
+  font-weight: 700;
+  font-stretch: 78%;
+  line-height: .98;
+  letter-spacing: -.01em;
+  margin: 18px 0 22px;
+  text-wrap: balance;
+  max-width: 14ch;
+}
+.role {
+  font-family: var(--f-display); font-stretch: 112%; font-weight: 500;
+  font-size: var(--step-1); margin: 0 0 14px;
+}
+.lede { max-width: 56ch; margin: 0; }
+.lede strong { font-weight: 600; }
+.links { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 28px; }
+.links a { font-family: var(--f-mono); font-size: var(--step--1); }
+
+.term {
+  background: var(--term-bg); color: var(--term-fg);
+  font-family: var(--f-mono); font-size: .78rem; line-height: 1.7;
+  border-radius: 4px; padding: 16px 18px; min-width: 0; overflow-x: auto;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 12px 32px -18px rgba(0,0,0,.5);
+}
+.term .bar { display: flex; gap: 6px; margin-bottom: 10px; }
+.term .bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--term-dim); opacity: .6; }
+.term p { margin: 0; white-space: pre; }
+.term .p { color: var(--signal); }
+.term .c { color: var(--term-dim); }
+
+/* ---------- Fatos ---------- */
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.fact { padding: 22px 20px 22px 0; display: grid; gap: 4px; align-content: start; }
+.fact + .fact { padding-left: 20px; border-left: 1px solid var(--line); }
+.fact b { font-family: var(--f-display); font-stretch: 70%; font-weight: 700; font-size: var(--step-3); line-height: 1; font-variant-numeric: tabular-nums; }
+.fact span { font-size: .9rem; color: var(--muted); line-height: 1.4; }
+
+/* ---------- Seções ---------- */
+section { padding-block: clamp(48px, 8vw, 88px); }
+section + section { border-top: 1px solid var(--line); }
+.section-head { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); gap: 24px; margin-bottom: 36px; }
+h2 { font-family: var(--f-display); font-weight: 650; font-stretch: 85%; font-size: var(--step-3); line-height: 1.05; margin: 0; text-wrap: balance; }
+.section-head p { margin: 10px 0 0; color: var(--muted); max-width: var(--measure); }
+
+/* Frentes */
+.fronts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.front { padding: 22px 24px 24px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.front:not(:nth-child(3n+1)) { padding-left: 24px; border-left: 1px solid var(--line); }
+.front .layer { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--signal); }
+.front h3 { font-family: var(--f-display); font-stretch: 92%; font-weight: 650; font-size: var(--step-1); margin: 6px 0 8px; line-height: 1.2; }
+.front p { margin: 0; font-size: .95rem; color: var(--muted); }
+
+/* Casos */
+.case { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); gap: 24px; padding-block: 32px; border-top: 1px solid var(--line); }
+.case:first-of-type { border-top: 0; padding-top: 0; }
+.case-meta { display: grid; gap: 6px; align-content: start; }
+.case-meta .org { font-family: var(--f-display); font-weight: 700; font-stretch: 90%; font-size: var(--step-1); color: var(--accent); line-height: 1.2; }
+.case-meta .mono { color: var(--muted); }
+.case-body { min-width: 0; max-width: var(--measure); }
+.case-body h3 { font-family: var(--f-display); font-weight: 600; font-stretch: 95%; font-size: var(--step-2); line-height: 1.15; margin: 0 0 14px; text-wrap: balance; }
+.case-body dl { margin: 0; display: grid; gap: 14px; }
+.case-body dt { font-family: var(--f-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--signal); }
+.case-body dd { margin: 2px 0 0; }
+.case-body ul { margin: 4px 0 0; padding-left: 1.1em; display: grid; gap: 6px; }
+.metrics { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.metrics div { display: grid; }
+.metrics b { font-family: var(--f-display); font-stretch: 75%; font-size: var(--step-2); font-weight: 700; line-height: 1.1; }
+.metrics span { font-size: .8rem; color: var(--muted); }
+.stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 0; padding: 0; list-style: none; }
+.stack li { font-family: var(--f-mono); font-size: .75rem; padding: 2px 8px; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); }
+.note { font-size: .875rem; color: var(--muted); font-style: italic; margin: 14px 0 0; }
+
+/* Experiência */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; }
+.timeline li { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); gap: 24px; padding-block: 16px; border-top: 1px solid var(--line); }
+.timeline li:first-child { border-top: 0; }
+.timeline .when { font-family: var(--f-mono); font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums; }
+.timeline .what b { font-weight: 600; }
+.timeline .what p { margin: 2px 0 0; color: var(--muted); max-width: var(--measure); }
+
+/* Certificações */
+.certs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
+.certs h3 { font-family: var(--f-display); font-stretch: 92%; font-weight: 650; font-size: var(--step-1); margin: 0 0 12px; }
+.cert-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.cert-list li { padding: 10px 0; border-top: 1px solid var(--line); display: grid; gap: 2px; }
+.cert-list li:first-child { border-top: 0; padding-top: 0; }
+.cert-list b { font-weight: 600; }
+.cert-list span { font-family: var(--f-mono); font-size: .75rem; color: var(--muted); }
+.cert-groups p { margin: 0 0 12px; color: var(--muted); font-size: .95rem; }
+.cert-groups p b { color: var(--ink); font-weight: 600; }
+
+.personal { max-width: var(--measure); font-size: var(--step-1); line-height: 1.55; margin: 0; }
+
+/* Contato */
+.contact { background: var(--surface); border-top: 1px solid var(--line); }
+.contact .wrap { padding-block: clamp(40px, 7vw, 72px); display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); gap: 24px; }
+.contact-list { display: grid; gap: 10px; margin: 0; }
+.contact-list div { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.contact-list dd { margin: 0; font-family: var(--f-mono); font-size: var(--step--1); overflow-wrap: anywhere; }
+footer { color: var(--muted); }
+footer .wrap { padding-block: 20px; font-size: .75rem; display: flex; flex-wrap: wrap; gap: 6px 20px; justify-content: space-between; }
+
+@media (max-width: 900px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); }
+  .fronts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .front:not(:nth-child(3n+1)) { padding-left: 0; border-left: 0; }
+  .front:nth-child(2n) { padding-left: 24px; border-left: 1px solid var(--line); }
+}
+@media (max-width: 820px) {
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fact:nth-child(3) { padding-left: 0; border-left: 0; }
+  .fact:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .section-head, .case, .timeline li, .contact .wrap { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .certs { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .fronts { grid-template-columns: minmax(0, 1fr); }
+  .front:nth-child(2n) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 420px) {
+  .facts { grid-template-columns: minmax(0, 1fr); }
+  .fact, .fact + .fact { padding-left: 0; border-left: 0; }
+  .fact + .fact { border-top: 1px solid var(--line); }
+  .contact-list div { grid-template-columns: minmax(0, 1fr); gap: 0; }
+}
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+<header class="hero">
+  <canvas id="camadas" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <div class="mono coord">15°47′S 47°53′W · Brasília, DF</div>
+      <h1>Abel da Silva Cruvinel</h1>
+      <p class="role">Cientista de Dados Especialista</p>
+      <p class="lede">Doutor em Ciência e Tecnologia pela UFU. Há mais de treze anos trabalho entre engenharia, geotecnologia, estatística, engenharia de software e inteligência artificial. Construo de bases geoespaciais nacionais a APIs, pipelines e agentes de IA em produção. <strong>Trabalho onde os dados ainda não viraram informação.</strong></p>
+      <nav class="links" aria-label="Perfis">
+        <a href="https://www.linkedin.com/in/abeldasilvacruvinel/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://lattes.cnpq.br/5608090350420567" target="_blank" rel="noopener">Currículo Lattes</a>
+        <a href="https://github.com/abelsilvaeng" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+    <div class="term" aria-label="Exemplo do dia a dia de trabalho">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <p><span class="p">abel@srv:~$</span> ssh gis-prod</p>
+      <p><span class="p">abel@gis-prod:~$</span> psql -c "SELECT br, km</p>
+      <p>   FROM snv_historico WHERE ST_DWithin(...)"</p>
+      <p><span class="p">abel@gis-prod:~$</span> docker compose up -d api</p>
+      <p><span class="c"># rodovia, km e município para cada ponto</span></p>
+      <p><span class="p">abel@gis-prod:~$</span> python avaliar_agente.py</p>
+      <p><span class="c"># bateria de perguntas, resposta por resposta</span></p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="facts">
+    <div class="fact"><b>13+</b><span>anos com geoprocessamento, bancos de dados e modelagem preditiva</span></div>
+    <div class="fact"><b>35</b><span>anos de carteira de infraestrutura priorizada no PELT-MG</span></div>
+    <div class="fact"><b>26</b><span>disciplinas lecionadas em Engenharia, Arquitetura e Agronomia</span></div>
+    <div class="fact"><b>3</b><span>certificações Oracle em IA, agentes e banco de dados</span></div>
+  </div>
+</div>
+
+<main>
+  <section id="frentes">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="label">Frentes de atuação</div>
+        <div>
+          <h2>Uma carreira em camadas paralelas</h2>
+          <p>Trabalho em ambientes SSH enquanto processo dados espaciais, publico APIs e avalio agentes de IA. As frentes abaixo não são fases da carreira. Elas acontecem ao mesmo tempo.</p>
+        </div>
+      </div>
+      <div class="fronts">
+        <div class="front"><div class="layer">IA e ciência de dados</div><h3>Modelos preditivos, LLMs e agentes</h3><p>RAG sobre acervos documentais, agentes de IA com avaliação por bateria de testes, modelos preditivos para tráfego, segurança viária, agricultura e recursos hídricos.</p></div>
+        <div class="front"><div class="layer">Engenharia de software</div><h3>APIs, pipelines e sustentação</h3><p>Pipelines de publicação de APIs, deploy, gerenciamento de máquinas virtuais, serviços de sustentação e manutenção. Python, Java, JavaScript, SQL, KQL e R.</p></div>
+        <div class="front"><div class="layer">Nuvem e dados</div><h3>Plataformas de dados em escala</h3><p>Databricks, AWS, Azure, Google Cloud e Oracle Cloud. PostgreSQL/PostGIS, SQL Server e Kubernetes em ambiente on-premises.</p></div>
+        <div class="front"><div class="layer">Geotecnologia e transportes</div><h3>Bases oficiais e redes</h3><p>Sistema Nacional de Viação, mapas multimodais, modelagem de demanda, simulação de redes, sensoriamento remoto e automação cartográfica.</p></div>
+        <div class="front"><div class="layer">Recursos hídricos e saneamento</div><h3>Engenharia aplicada ao território</h3><p>Planos municipais de saneamento, disponibilidade hídrica, background geoquímico, modelagem HAND para águas subterrâneas e diagnósticos hídricos com métodos inéditos.</p></div>
+        <div class="front"><div class="layer">Pesquisa, ensino e gestão</div><h3>Ciência, sala de aula e empresa</h3><p>Doutorado, pedido de patente, artigos e capítulos de livro, bancas e orientações. Fundador da GFX GEO e diretor de uma instituição sem fins lucrativos de saúde pública.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="trabalhos">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="label">Trabalhos selecionados</div>
+        <div>
+          <h2>Do sistema nacional de viação ao município</h2>
+          <p>Uma seleção. A lista completa de publicações, bancas e orientações está no Lattes.</p>
+        </div>
+      </div>
+
+      <article class="case">
+        <div class="case-meta">
+          <div class="org">PRF</div>
+          <div class="mono">Responsável Técnico de Geotecnologia e Ciência de Dados</div>
+          <div class="mono">2024 até hoje</div>
+        </div>
+        <div class="case-body">
+          <h3>Ciência de dados, IA e engenharia para segurança viária</h3>
+          <dl>
+            <div><dt>Contexto</dt><dd>A Polícia Rodoviária Federal opera sobre toda a malha federal. Ocorrências, acidentes, normativos e registros de auditoria se acumulam em grande volume, em formatos diferentes, e boa parte está em texto sem estrutura.</dd></div>
+            <div><dt>O que faço</dt><dd>
+              <ul>
+                <li>Atuo como responsável técnico nas torres de Integrações, Ciência de Dados e IA. Gerencio bancos de dados e planejo novos produtos em geotecnologia e aprendizado de máquina.</li>
+                <li>Desenvolvo modelos preditivos para tráfego e segurança viária e aplicações de campo.</li>
+                <li>Construí uma rede de agentes especialistas com recuperação aumentada (RAG) sobre a base jurídico-administrativa, com OCR, correção de ligaduras de fontes de órgãos federais, descrição de imagens por modelo de visão local e divisão semântica do texto.</li>
+                <li>Trabalho na plataforma de IA generativa do órgão, em Kubernetes on-premises, e em assistentes analíticos em linguagem natural sobre o lakehouse, validados por baterias de perguntas.</li>
+                <li>Desenvolvi uma API que devolve rodovia, km e município a partir da coordenada e da data, usando o histórico do SNV e das malhas do IBGE.</li>
+                <li>Construí o pipeline de extração e carga de logs de auditoria para a corregedoria, com produtos auditáveis.</li>
+              </ul>
+            </dd></div>
+            <div><dt>Em números</dt><dd>
+              <div class="metrics">
+                <div><b>911</b><span>documentos normativos indexados</span></div>
+                <div><b>16.888</b><span>trechos semânticos</span></div>
+                <div><b>23.488</b><span>requisições de validação da API, 0 falhas</span></div>
+                <div><b>99,7%</b><span>acerto de km na API</span></div>
+              </div>
+            </dd></div>
+          </dl>
+          <ul class="stack"><li>Python</li><li>LLMs locais</li><li>RAG</li><li>agentes de IA</li><li>Kubernetes</li><li>Databricks</li><li>FastAPI</li><li>PostgreSQL/PostGIS</li><li>SQL Server</li><li>Zabbix</li></ul>
+          <p class="note">Por se tratar de um órgão de segurança pública, dados, telas e detalhes de sistemas internos não aparecem aqui.</p>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-meta">
+          <div class="org">DNIT</div>
+          <div class="mono">Engenheiro e responsável técnico</div>
+          <div class="mono">3 anos</div>
+        </div>
+        <div class="case-body">
+          <h3>Mapas Multimodais e gestão do Sistema Nacional de Viação</h3>
+          <dl>
+            <div><dt>Contexto</dt><dd>O SNV é a referência oficial da malha de transportes federal. Rodovias, ferrovias e hidrovias são cadastradas trecho a trecho, e os Mapas Multimodais publicados pelo DNIT precisam acompanhar cada revisão dessa base.</dd></div>
+            <div><dt>O que fiz</dt><dd>Fui engenheiro e responsável técnico em geoprocessamento e banco de dados nos serviços prestados ao DNIT. Processei dados rodoviários, ferroviários e aquaviários, geri os dados do SNV e fui um dos responsáveis pelo projeto de geração automatizada dos Mapas Multimodais.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-meta">
+          <div class="org">CODEMGE</div>
+          <div class="mono">Assessor de Infraestrutura</div>
+        </div>
+        <div class="case-body">
+          <h3>Plano Estadual de Logística e Transportes de Minas Gerais</h3>
+          <dl>
+            <div><dt>Contexto</dt><dd>O PELT-MG orienta o investimento em infraestrutura de transportes de Minas Gerais por 35 anos. Para isso, precisa de uma base única que junte rede, demanda e dados socioeconômicos.</dd></div>
+            <div><dt>O que fiz</dt><dd>
+              <ul>
+                <li>Modelei e geri os bancos de dados do plano e estruturei as bases geoespaciais e socioeconômicas do estado.</li>
+                <li>Participei da construção de cenários para corredores logísticos, da modelagem de demanda e da simulação de redes de transporte.</li>
+                <li>Desenvolvi rotinas de automação cartográfica e análises espaciais e preditivas para priorizar os empreendimentos da carteira, com projeção de frotas, cargas e pessoas em todos os modos.</li>
+              </ul>
+            </dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-meta">
+          <div class="org">AMAPAR</div>
+          <div class="mono">Coordenador técnico do Eixo Águas</div>
+        </div>
+        <div class="case-body">
+          <h3>Planos Municipais de Saneamento Básico</h3>
+          <dl>
+            <div><dt>Contexto</dt><dd>Todo município precisa de um Plano Municipal de Saneamento Básico para planejar abastecimento de água, esgoto, drenagem e resíduos, e para acessar recursos federais.</dd></div>
+            <div><dt>O que fiz</dt><dd>Coordenei tecnicamente o Eixo Águas na elaboração dos PMSB de municípios vinculados à AMAPAR, entre eles Carmo do Paranaíba, MG.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-meta">
+          <div class="org">Lagoa Grande, MG</div>
+          <div class="mono">GFX GEO para a prefeitura</div>
+          <div class="mono">2026</div>
+        </div>
+        <div class="case-body">
+          <h3>Diagnóstico hidrológico municipal que virou ferramenta</h3>
+          <dl>
+            <div><dt>Contexto</dt><dd>Municípios pequenos precisam saber onde a água escoa, onde o solo se perde e onde intervir primeiro, mas raramente têm uma equipe de geoprocessamento.</dd></div>
+            <div><dt>O que fiz</dt><dd>Entreguei à prefeitura um diagnóstico com 16 produtos cartográficos em 3D sobre terreno, escoamento superficial, uso do solo, sedimentos e áreas prioritárias. Depois generalizei o pipeline numa ferramenta configurável por município, que gera bacias, exutórios, planilhas do Método Racional, mapas e relatórios a partir dos insumos brutos.</dd></div>
+          </dl>
+          <ul class="stack"><li>Python</li><li>GRASS GIS</li><li>R · rayshader</li><li>rasterio</li><li>geopandas</li><li>Sentinel-2</li></ul>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-meta">
+          <div class="org">UFU · GFX GEO</div>
+          <div class="mono">Doutorado e pesquisa aplicada</div>
+        </div>
+        <div class="case-body">
+          <h3>Previsão de produtividade agrícola para a agricultura familiar</h3>
+          <dl>
+            <div><dt>Contexto</dt><dd>Prever a safra exige escolher, entre centenas de variáveis climáticas medidas por satélite, as poucas que explicam a produtividade de cada cultura em cada lugar.</dd></div>
+            <div><dt>O que fiz</dt><dd>No doutorado, desenvolvi um método de previsão de produtividade agrícola com seleção automática de variáveis climáticas obtidas por sensoriamento remoto. O método é objeto de pedido de patente de invenção depositado pela UFU no INPI em 2025. Na GFX GEO, a linha continua numa plataforma de análise preditiva para agricultura familiar com agentes de IA, sobre uma base própria que cruza produção agrícola municipal e clima.</dd></div>
+            <div><dt>Base de dados</dt><dd>
+              <div class="metrics">
+                <div><b>71</b><span>culturas por município</span></div>
+                <div><b>1974–2024</b><span>série de produção (IBGE)</span></div>
+                <div><b>45 anos</b><span>de clima (FLDAS)</span></div>
+              </div>
+            </dd></div>
+          </dl>
+          <ul class="stack"><li>R</li><li>Python</li><li>sensoriamento remoto</li><li>seleção de variáveis</li><li>agentes de IA</li></ul>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-meta">
+          <div class="org">Estudos especiais</div>
+          <div class="mono">Empresas e órgãos públicos</div>
+        </div>
+        <div class="case-body">
+          <h3>Estudos hídricos e ambientais de alta complexidade</h3>
+          <dl>
+            <div><dt>O que fiz</dt><dd>
+              <ul>
+                <li>Estudos de background geoquímico para empresas multinacionais.</li>
+                <li>Modelagem HAND (altura acima da drenagem mais próxima) para orientar intervenções em águas subterrâneas.</li>
+                <li>Diagnóstico hídrico com métodos inéditos e estudos de disponibilidade hídrica.</li>
+              </ul>
+            </dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="experiencia">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="label">Experiência</div>
+        <div><h2>Onde trabalhei</h2></div>
+      </div>
+      <ol class="timeline">
+        <li><div class="when">Polícia Rodoviária Federal</div><div class="what"><b>Responsável Técnico de Geotecnologia e Ciência de Dados</b><p>Desde 2024. Torres de Integrações, Ciência de Dados e IA.</p></div></li>
+        <li><div class="when">GFX GEO</div><div class="what"><b>Fundador</b><p>Empresa de engenharia especializada em geotecnologias e ciência de dados. Estudos hídricos, produtos para compras públicas e para a agricultura familiar.</p></div></li>
+        <li><div class="when">Terceiro setor</div><div class="what"><b>Diretor</b><p>Instituição sem fins lucrativos voltada à saúde pública.</p></div></li>
+        <li><div class="when">CODEMGE</div><div class="what"><b>Assessor de Infraestrutura</b><p>Plano Estadual de Logística e Transportes de Minas Gerais.</p></div></li>
+        <li><div class="when">DNIT</div><div class="what"><b>Engenheiro e responsável técnico</b><p>Três anos em geoprocessamento e banco de dados: SNV e Mapas Multimodais.</p></div></li>
+        <li><div class="when">AMAPAR</div><div class="what"><b>Coordenador técnico do Eixo Águas</b><p>Planos Municipais de Saneamento Básico.</p></div></li>
+        <li><div class="when">Ensino superior</div><div class="what"><b>Professor universitário</b><p>De 2015 a 2023. 26 disciplinas em cursos de Engenharia, Arquitetura, Agronomia e afins.</p></div></li>
+        <li><div class="when">UFU</div><div class="what"><b>Doutorado em Ciência e Tecnologia</b><p>Previsão de produtividade agrícola com variáveis climáticas de sensoriamento remoto.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="certificacoes">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="label">Certificações</div>
+        <div><h2>Certificações e formação complementar</h2></div>
+      </div>
+      <div class="certs">
+        <div>
+          <h3>Certificações</h3>
+          <ul class="cert-list">
+            <li><b>OCI AI Foundations Associate</b><span>Oracle · 1Z0-1122 · 2026</span></li>
+            <li><b>Agentic AI Foundations Associate</b><span>Oracle · 1Z0-1157 · 2026</span></li>
+            <li><b>AI Database Foundations Associate</b><span>Oracle · 1Z0-1195 · 2026</span></li>
+            <li><b>Java Developer Professional Certificate</b><span>IBM</span></li>
+          </ul>
+        </div>
+        <div class="cert-groups">
+          <h3>Formação complementar</h3>
+          <p><b>Nuvem e IA.</b> AWS: Cloud Practitioner Essentials, revisão do Solutions Architect Professional, customização e avaliação de LLMs no SageMaker, Nova Forge. IBM: IA generativa para Java e Spring, microsserviços, contêineres e DevOps.</p>
+          <p><b>Recursos hídricos.</b> 23 cursos da Enap com a ANA, de hidrologia e outorga a segurança de barragens e planos de ação de emergência.</p>
+          <p><b>Dados e geotecnologia.</b> PostgreSQL, PostGIS e GeoRaster, ArcPy, Google Earth Engine, redes neurais com Python, estatística com R.</p>
+          <p><b>Gestão.</b> Seis Sigma Green Belt e Black Belt, LGPD, logística sustentável na administração pública.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fora">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="label">Fora do expediente</div>
+        <div>
+          <p class="personal">Crio um gato chamado Ronald Fisher. Tento fazer astrofotografia de longa exposição no meio do mato, em ângulos questionáveis. Às vezes me acho compositor e multi-instrumentista autodidata, e também cozinho e faço cerveja.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="contact" id="contato">
+  <div class="wrap">
+    <div class="label">Contato</div>
+    <dl class="contact-list">
+      <div><dt class="label">LinkedIn</dt><dd><a href="https://www.linkedin.com/in/abeldasilvacruvinel/" target="_blank" rel="noopener">linkedin.com/in/abeldasilvacruvinel</a></dd></div>
+      <div><dt class="label">Lattes</dt><dd><a href="https://lattes.cnpq.br/5608090350420567" target="_blank" rel="noopener">lattes.cnpq.br/5608090350420567</a></dd></div>
+      <div><dt class="label">GitHub</dt><dd><a href="https://github.com/abelsilvaeng" target="_blank" rel="noopener">github.com/abelsilvaeng</a></dd></div>
+    </dl>
+  </div>
+</div>
+<footer><div class="wrap mono"><span>Abel da Silva Cruvinel · Brasília, DF</span><span>SIRGAS 2000 · atualizado em novembro de 2026</span></div></footer>
+
+<script>
+(function () {
+  var canvas = document.getElementById('camadas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  // Semente fixa: o desenho é o mesmo a cada carga.
+  var seed = 1907;
+  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  var N = 64, grid = [];
+  for (var i = 0; i < N * N; i++) grid.push(rnd());
+  function g(x, y) { return grid[((y % N + N) % N) * N + ((x % N + N) % N)]; }
+  function sm(t) { return t * t * (3 - 2 * t); }
+  function noise(x, y) {
+    var xi = Math.floor(x), yi = Math.floor(y), xf = sm(x - xi), yf = sm(y - yi);
+    var a = g(xi, yi), b = g(xi + 1, yi), c = g(xi, yi + 1), d = g(xi + 1, yi + 1);
+    return a + (b - a) * xf + (c - a) * yf + (a - b - c + d) * xf * yf;
+  }
+  function field(x, y) { return noise(x, y) * .55 + noise(x * 2.1, y * 2.1) * .28 + noise(x * 4.3, y * 4.3) * .17; }
+
+  // Camada de rede: nós fixos em coordenadas relativas, cada um ligado aos 2 vizinhos mais próximos.
+  var nodes = [];
+  for (var n = 0; n < 34; n++) nodes.push([.42 + rnd() * .58, rnd()]);
+
+  function draw() {
+    var r = canvas.getBoundingClientRect();
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(r.width * dpr);
+    canvas.height = Math.round(r.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, r.width, r.height);
+    var css = getComputedStyle(document.documentElement);
+    var cMinor = css.getPropertyValue('--contour').trim();
+    var cIndex = css.getPropertyValue('--contour-index').trim();
+    var cEdge = css.getPropertyValue('--edge').trim();
+
+    // Relevo
+    var step = 7, scale = 1 / 230;
+    var cols = Math.ceil(r.width / step) + 1, rows = Math.ceil(r.height / step) + 1;
+    var v = new Float32Array(cols * rows);
+    for (var y = 0; y < rows; y++) for (var x = 0; x < cols; x++) v[y * cols + x] = field(x * step * scale, y * step * scale) + (x / cols) * .25;
+    var levels = 26, lo = .15, hi = 1.05;
+    for (var k = 0; k < levels; k++) {
+      var t = lo + (hi - lo) * k / levels, mestra = k % 5 === 0;
+      ctx.strokeStyle = mestra ? cIndex : cMinor;
+      ctx.lineWidth = mestra ? 1.3 : .7;
+      ctx.beginPath();
+      for (var yy = 0; yy < rows - 1; yy++) for (var xx = 0; xx < cols - 1; xx++) {
+        var a = v[yy * cols + xx], b = v[yy * cols + xx + 1], c = v[(yy + 1) * cols + xx + 1], d = v[(yy + 1) * cols + xx];
+        var idx = (a > t ? 8 : 0) | (b > t ? 4 : 0) | (c > t ? 2 : 0) | (d > t ? 1 : 0);
+        if (idx === 0 || idx === 15) continue;
+        var px = xx * step, py = yy * step;
+        var T = [px + step * (t - a) / (b - a), py], R = [px + step, py + step * (t - b) / (c - b)];
+        var B = [px + step * (t - d) / (c - d), py + step], L = [px, py + step * (t - a) / (d - a)];
+        var s;
+        switch (idx) {
+          case 1: case 14: s = [[L, B]]; break;
+          case 2: case 13: s = [[B, R]]; break;
+          case 3: case 12: s = [[L, R]]; break;
+          case 4: case 11: s = [[T, R]]; break;
+          case 5: s = [[L, T], [B, R]]; break;
+          case 6: case 9: s = [[T, B]]; break;
+          case 7: case 8: s = [[L, T]]; break;
+          case 10: s = [[L, B], [T, R]]; break;
+        }
+        for (var q = 0; q < s.length; q++) { ctx.moveTo(s[q][0][0], s[q][0][1]); ctx.lineTo(s[q][1][0], s[q][1][1]); }
+      }
+      ctx.stroke();
+    }
+
+    // Rede
+    var P = nodes.map(function (p) { return [p[0] * r.width, p[1] * r.height]; });
+    ctx.strokeStyle = cEdge; ctx.lineWidth = 1.1; ctx.beginPath();
+    var seen = {};
+    P.forEach(function (p, i) {
+      var near = P.map(function (o, j) { return [j, (o[0] - p[0]) * (o[0] - p[0]) + (o[1] - p[1]) * (o[1] - p[1])]; })
+        .filter(function (e) { return e[0] !== i; }).sort(function (m, w) { return m[1] - w[1]; }).slice(0, 2);
+      near.forEach(function (e) {
+        var key = Math.min(i, e[0]) + '-' + Math.max(i, e[0]);
+        if (seen[key]) return; seen[key] = 1;
+        ctx.moveTo(p[0], p[1]); ctx.lineTo(P[e[0]][0], P[e[0]][1]);
+      });
+    });
+    ctx.stroke();
+    ctx.fillStyle = cEdge;
+    P.forEach(function (p) { ctx.beginPath(); ctx.arc(p[0], p[1], 2.4, 0, Math.PI * 2); ctx.fill(); });
+  }
+
+  var timer;
+  function redraw() { clearTimeout(timer); timer = setTimeout(draw, 120); }
+  draw();
+  window.addEventListener('resize', redraw);
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw); } catch (e) {}
+  try { new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] }); } catch (e) {}
+})();
+</script>
+</body>
+</html>
