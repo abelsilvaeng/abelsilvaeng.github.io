@@ -333,13 +333,16 @@ footer .wrap { padding-block: 20px; font-size: .75rem; display: flex; flex-wrap:
         <div class="case-body">
           <h3>A API que localiza cada ponto na malha federal</h3>
           <dl>
-            <div><dt>Contexto</dt><dd>O <a href="https://www.gov.br/prf/pt-br/acesso-a-informacao/acoes-e-programas/projeto-mapear" target="_blank" rel="noopener">Projeto Mapear</a> é o programa da PRF, em parceria com a Childhood Brasil desde 2003, que mapeia nas rodovias federais os pontos vulneráveis à exploração sexual de crianças e adolescentes. O projeto recebeu, entre outros, o Prêmio Nacional de Direitos Humanos. Para funcionar, cada ponto levantado em campo precisa virar rodovia, quilômetro e município, de forma consistente com a malha vigente na data do registro.</dd></div>
-            <div><dt>O que fiz</dt><dd>Desenvolvi a API de geolocalização que sustenta o projeto. Ela recebe a coordenada e a data e devolve rodovia, km e município, consultando o histórico de versões do Sistema Nacional de Viação e as malhas municipais do IBGE. A validação foi feita contra registros reais, requisição a requisição.</dd></div>
-            <div><dt>Em números</dt><dd>
+            <div><dt>Contexto</dt><dd>O <a href="https://www.gov.br/prf/pt-br/acesso-a-informacao/acoes-e-programas/projeto-mapear" target="_blank" rel="noopener">Projeto Mapear</a> é o programa da PRF, criado em 2003 e fortalecido em 2009 pela parceria com a Childhood Brasil, que mapeia nas rodovias federais os pontos vulneráveis à exploração sexual de crianças e adolescentes. O projeto recebeu, entre outros, o Prêmio Nacional de Direitos Humanos e o reconhecimento internacional do Fórum de Segurança da ONU (2012). Para funcionar, cada ponto levantado em campo precisa virar rodovia, quilômetro e município, de forma consistente com a malha oficial.</dd></div>
+            <div><dt>O que fiz</dt><dd>Desenvolvi a APIGEO, a API de geolocalização que sustenta o projeto. Ela recebe a coordenada e devolve rodovia, km, município e unidade responsável, consultando a edição vigente do Sistema Nacional de Viação e as malhas municipais do IBGE. Automatizei a atualização dessas bases: cada nova edição é detectada, carregada, validada no próprio banco e ativada numa transação, sem chamado e sem novo deploy.</dd></div>
+            <div><dt>O Mapear em números</dt><dd>
               <div class="metrics">
-                <div><b>23.488</b><span>requisições de validação, 0 falhas</span></div>
-                <div><b>99,7%</b><span>acerto de km</span></div>
+                <div><b>2003</b><span>ano de criação do projeto</span></div>
+                <div><b>11ª</b><span>edição, 2025/2026</span></div>
+                <div><b>13.758</b><span>pontos mapeados na 11ª edição</span></div>
+                <div><b>4</b><span>níveis de risco</span></div>
               </div>
+              <p class="note">Fonte: <a href="https://www.gov.br/prf/pt-br/acesso-a-informacao/acoes-e-programas/projeto-mapear" target="_blank" rel="noopener">página oficial do Projeto Mapear</a>.</p>
             </dd></div>
           </dl>
           <ul class="stack"><li>Python</li><li>FastAPI</li><li>PostgreSQL/PostGIS</li><li>SNV histórico</li><li>malhas IBGE</li><li>gateway de APIs</li></ul>
@@ -357,12 +360,6 @@ footer .wrap { padding-block: 20px; font-size: .75rem; display: flex; flex-wrap:
           <dl>
             <div><dt>Corpus para RAG</dt><dd>Preparei o corpus documental de uma plataforma de IA generativa on-premises: documentos jurídico-administrativos processados com OCR, correção de ligaduras de fontes de órgãos federais, descrição de imagens por modelo de visão local e divisão semântica do texto, prontos para busca vetorial.</dd></div>
             <div><dt>Assistentes no lakehouse</dt><dd>Configuro e avalio assistentes analíticos em linguagem natural sobre o lakehouse no Databricks. Cada assistente é validado por baterias de perguntas com resposta conhecida, conferidas uma a uma antes de ir para uso.</dd></div>
-            <div><dt>Em números</dt><dd>
-              <div class="metrics">
-                <div><b>911</b><span>documentos normativos processados</span></div>
-                <div><b>16.888</b><span>trechos semânticos</span></div>
-              </div>
-            </dd></div>
           </dl>
           <ul class="stack"><li>Python</li><li>OCR</li><li>modelos de visão locais</li><li>embeddings</li><li>RAG</li><li>Databricks</li><li>avaliação de LLMs</li></ul>
         </div>
