@@ -1,0 +1,146 @@
+{
+ "modo": "previa",
+ "gerado_de": "acervo/biblioteca/catalogo.csv",
+ "livros": [
+  {
+   "slug": "ai-engineering",
+   "titulo": "AI Engineering",
+   "autor": "Chip Huyen",
+   "ano": "2025",
+   "tema": "IA/LLM/agentes",
+   "capa": "ai-engineering.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "aprendizado-de-maquina-uma-abordagem-estatistica",
+   "titulo": "Aprendizado de Máquina: uma abordagem estatística",
+   "autor": "Rafael Izbicki; Tiago Mendonça dos Santos",
+   "ano": "2020",
+   "tema": "ciência de dados/ML",
+   "capa": "aprendizado-de-maquina-uma-abordagem-estatistica.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "deep-learning",
+   "titulo": "Deep Learning",
+   "autor": "Ian Goodfellow; Yoshua Bengio; Aaron Courville",
+   "ano": "2016",
+   "tema": "ciência de dados/ML",
+   "capa": "deep-learning.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "hands-on-machine-learning-with-scikit-learn-and-pytorch",
+   "titulo": "Hands-On Machine Learning with Scikit-Learn and PyTorch",
+   "autor": "Aurélien Geron",
+   "ano": "2025",
+   "tema": "ciência de dados/ML",
+   "capa": "hands-on-machine-learning-with-scikit-learn-and-pytorch.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "probabilistic-machine-learning-an-introduction",
+   "titulo": "Probabilistic Machine Learning: An Introduction",
+   "autor": "Kevin P. Murphy",
+   "ano": "2022",
+   "tema": "ciência de dados/ML",
+   "capa": "probabilistic-machine-learning-an-introduction.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "reinforcement-learning-an-introduction",
+   "titulo": "Reinforcement Learning: An Introduction (2nd ed.)",
+   "autor": "Richard S. Sutton; Andrew G. Barto",
+   "ano": "2018",
+   "tema": "ciência de dados/ML",
+   "capa": "reinforcement-learning-an-introduction.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "highway-capacity-manual",
+   "titulo": "Highway Capacity Manual (HCM 2000)",
+   "autor": "Transportation Research Board",
+   "ano": "2000",
+   "tema": "engenharia/ambiental",
+   "capa": "highway-capacity-manual.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "resistencia-dos-materiais",
+   "titulo": "Resistência dos Materiais (7a ed.)",
+   "autor": "R. C. Hibbeler",
+   "ano": "2010",
+   "tema": "engenharia/ambiental",
+   "capa": "resistencia-dos-materiais.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "mathematics-for-machine-learning",
+   "titulo": "Mathematics for Machine Learning",
+   "autor": "Marc Peter Deisenroth; A. Aldo Faisal; Cheng Soon Ong",
+   "ano": "2020",
+   "tema": "estatística/matemática",
+   "capa": "mathematics-for-machine-learning.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "practical-statistics-for-data-scientists",
+   "titulo": "Practical Statistics for Data Scientists",
+   "autor": "Peter Bruce; Andrew Bruce",
+   "ano": "2017",
+   "tema": "estatística/matemática",
+   "capa": "practical-statistics-for-data-scientists.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "the-book-of-why-the-new-science-of-cause-and-effect",
+   "titulo": "The Book of Why: The New Science of Cause and Effect",
+   "autor": "Judea Pearl; Dana Mackenzie",
+   "ano": "2018",
+   "tema": "estatística/matemática",
+   "capa": "the-book-of-why-the-new-science-of-cause-and-effect.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "analise-espacial-com-r",
+   "titulo": "Análise espacial com R",
+   "autor": "Jean-François Mas; Marise Barreiros Horta; Rodrigo Nogueira de Vasconcelos; Elaine Cristina Barbosa Cambui",
+   "ano": "",
+   "tema": "geo/sensoriamento",
+   "capa": "analise-espacial-com-r.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "cartografia-geral-digital-e-tematica",
+   "titulo": "Cartografia geral, digital e temática (Série Geotecnologias, v. 1)",
+   "autor": "Tony Vinicius Moreira Sampaio; Maria Cecília Bonato Brandalize",
+   "ano": "2018",
+   "tema": "geo/sensoriamento",
+   "capa": "cartografia-geral-digital-e-tematica.jpg",
+   "lido": "",
+   "previa": true
+  },
+  {
+   "slug": "introducao-a-ciencia-da-geoinformacao",
+   "titulo": "Introdução à Ciência da Geoinformação",
+   "autor": "Gilberto Câmara; Clodoveu Davis; Antônio Miguel Vieira Monteiro (orgs.)",
+   "ano": "2001",
+   "tema": "geo/sensoriamento",
+   "capa": "introducao-a-ciencia-da-geoinformacao.jpg",
+   "lido": "",
+   "previa": true
+  }
+ ]
+}
