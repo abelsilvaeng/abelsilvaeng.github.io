@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Previsão de safra por satélite: PIAT e pedido de patente | Abel da Silva Cruvinel</title>
+<meta name="description" content="Um ativo de dados de safra, clima e relevo e um modelo preditivo próprio, para estimar produtividade agrícola em células de cerca de 5,5 km em vez de um númer">
+<link rel="canonical" href="https://abelsilvaeng.github.io/projetos/piat/">
+<link rel="alternate" hreflang="pt-BR" href="https://abelsilvaeng.github.io/projetos/piat/">
+<link rel="alternate" hreflang="en" href="https://abelsilvaeng.github.io/en/projetos/piat/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Previsão de safra por satélite: PIAT e pedido de patente | Abel da Silva Cruvinel">
+<meta property="og:description" content="Um ativo de dados de safra, clima e relevo e um modelo preditivo próprio, para estimar produtividade agrícola em células de cerca de 5,5 km em vez de um númer">
+<meta name="theme-color" content="#FAFAF7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F766E'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='16' font-weight='700' text-anchor='middle' fill='%23fff'%3EAC%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body class="inner">
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<header class="top"><div class="wrap top-in">
+<a class="brand" href="../../index.html">Abel da Silva Cruvinel</a>
+<nav class="top-nav" aria-label="Seções"><a href="../../index.html#trabalhos">Projetos de destaque</a><a href="../../index.html#historico">Histórico profissional</a><a href="../../index.html#formacao">Formação e pesquisa</a><a href="../../index.html#stack">Stack</a><a href="../../index.html#contato">Contato</a></nav>
+<div class="top-act"><div class="lang" role="group" aria-label="Idioma"><span class="on" aria-current="true" lang="pt-BR">PT</span><a href="../../en/projetos/piat/index.html" hreflang="en" lang="en" title="English">EN</a></div><a class="btn btn-solid btn-sm" href="../../assets/cv/ABEL_DA_SILVA_CRUVINEL_CV_SENIOR_DATA_SCIENTIST_2026-11.pdf" download>Baixar CV</a></div>
+</div></header>
+<main id="conteudo" class="case">
+<header class="case-head"><div class="wrap">
+<p class="crumb"><a href="../../index.html">Início</a><span aria-hidden="true">/</span><a href="../../index.html#trabalhos">Projetos de destaque</a><span aria-hidden="true">/</span><a href="../../index.html#xp-gfx">GFX GEO</a></p>
+<h1>Previsão de safra por satélite: PIAT e pedido de patente</h1>
+<p class="lede">Um ativo de dados de safra, clima e relevo e um modelo preditivo próprio, para estimar produtividade agrícola em células de cerca de 5,5 km em vez de um número único por município.</p>
+<div class="case-top">
+<p class="case-num"><strong class="mono">0,63</strong><span>R² em anos não vistos: 0,631 na soja e 0,634 no milho</span></p>
+<dl class="case-meta"><div><dt>Onde</dt><dd>GFX GEO</dd></div><div><dt>Período</dt><dd class="mono">2019 - 2026</dd></div><div><dt>Papel</dt><dd>Fundador e responsável técnico</dd></div></dl>
+</div>
+</div></header>
+<div class="wrap case-body">
+<div class="case-main">
+
+<section class="case-sec"><h2>Contexto</h2><p>As previsões de safra disponíveis trabalham por município ou estado: todo produtor do mesmo município recebe o mesmo número. Montei a PIAT pela GFX GEO para o Programa Centelha 3 MG (FAPEMIG), com piloto em 25 municípios do Alto Paranaíba, para soja, milho e sorgo, safras de 2001 a 2023.</p></section>
+<section class="case-sec"><h2>O que fiz</h2><ul><li>Montei o ativo de dados: produção agrícola do IBGE/SIDRA, clima do FLDAS e do CHIRPS, índices de vegetação e temperatura do MODIS, relevo do ANADEM e frações de cultura do MapBiomas.</li><li>Desenhei a grade de células na resolução do CHIRPS com supervisão fraca: o rótulo é municipal, as variáveis são por célula.</li><li>Rodei uma campanha de mais de 30 versões de experimento, com rastreabilidade completa de cada uma.</li><li>Encontrei e corrigi um vazamento metodológico: a seleção de variáveis fora do fold inflava o R² do sorgo em cerca de 0,13.</li><li>Refutei com teste placebo um ganho aparente de variáveis de solo.</li><li>Produzi o material de submissão: documento científico, anexo técnico, pitch, cronograma e mapas 3D.</li></ul></section>
+<section class="case-sec"><h2>Como funciona, em quatro etapas</h2><ol class="flow" aria-label="Como funciona, em quatro etapas"><li><h4>Dados</h4><ul><li>IBGE/SIDRA</li><li>FLDAS e CHIRPS</li><li>MODIS</li><li>ANADEM e MapBiomas</li></ul></li><li><h4>Processamento</h4><ul><li>Extração zonal no Earth Engine</li><li>Grade de células ~5,5 km</li><li>Área cultivada como máscara</li></ul></li><li><h4>Modelo</h4><ul><li>ExtraTrees</li><li>Validação por ano não visto</li><li>Placebo, SHAP e conformal</li></ul></li><li><h4>Produto</h4><ul><li>Mapas de produtividade prevista</li><li>Agente de IA por coordenada (previsto)</li></ul></li></ol></section>
+<section class="case-sec"><h2>Método</h2><ul><li>Validação temporal leave-one-year-out, com todo o pré-processamento dentro do fold.</li><li>Controle placebo: cada variável candidata é comparada com uma cópia embaralhada dela mesma, em várias sementes.</li><li>ExtraTrees com o ano como tendência tecnológica; transformação quantil-normal do alvo no sorgo.</li><li>Interpretação por valores de Shapley (SHAP) e intervalos por predição conformal.</li><li>Proxies hidro-topográficos (TWI, declividade) e janelas fenológicas por cultura.</li></ul></section>
+<section class="case-sec case-res"><h2>Resultado</h2><ul><li>R² em anos não vistos: 0,631 na soja, 0,634 no milho e 0,490 no sorgo (piloto Alto Paranaíba).</li><li>A fração de lavoura medida por satélite apareceu como 2º maior driver do milho e 3º da soja por SHAP.</li><li>O efeito do relevo sobre a produtividade é real, mas acontece abaixo da escala do município: a média municipal o dilui.</li></ul></section>
+<section class="case-sec"><h2>Figuras</h2><div class="figs figs-big"><figure><a href="../../assets/img/gfx-geo/piat-f06.jpg"><img src="../../assets/img/gfx-geo/piat-f06.jpg" alt="Produtividade prevista de soja na grade de células, safra 2022/23." width="1044" height="908" loading="lazy" decoding="async"></a><figcaption>Produtividade prevista de soja na grade de células, safra 2022/23.</figcaption></figure><figure><a href="../../assets/img/gfx-geo/piat-f07.jpg"><img src="../../assets/img/gfx-geo/piat-f07.jpg" alt="Observado contra previsto em anos que o modelo não viu." width="1400" height="397" loading="lazy" decoding="async"></a><figcaption>Observado contra previsto em anos que o modelo não viu.</figcaption></figure><figure><a href="../../assets/img/gfx-geo/piat-f05.jpg"><img src="../../assets/img/gfx-geo/piat-f05.jpg" alt="Chuva, NDVI, temperatura de superfície e TWI por célula." width="1400" height="1400" loading="lazy" decoding="async"></a><figcaption>Chuva, NDVI, temperatura de superfície e TWI por célula.</figcaption></figure><figure><a href="../../assets/img/gfx-geo/piat-f09.jpg"><img src="../../assets/img/gfx-geo/piat-f09.jpg" alt="O que mais pesa na previsão da soja, por valores de Shapley." width="936" height="663" loading="lazy" decoding="async"></a><figcaption>O que mais pesa na previsão da soja, por valores de Shapley.</figcaption></figure></div></section>
+<section class="case-sec case-pat"><h2>Pedido de patente BR 10 2025 019783 9</h2><p>Pedido depositado em 16/09/2025, com a Universidade Federal de Uberlândia como titular. O título registrado é &quot;Método de previsão de produtividade agrícola, através da seleção automática de variáveis climáticas oriundas de sensoriamento remoto&quot;. É um pedido depositado, não uma patente concedida, e o conteúdo técnico só se torna público quando o INPI publicar.</p><ul><li>Pedido depositado BR 10 2025 019783 9, patente de invenção</li><li>Depósito no INPI em 16/09/2025</li><li>Titular: Universidade Federal de Uberlândia</li></ul><p><a class="more" href="../../index.html#patente-inpi">Ver o pedido em Formação e pesquisa</a></p></section>
+</div>
+<aside class="case-side">
+<h2>Stack</h2><ul class="tags"><li>Python</li><li>scikit-learn</li><li>LightGBM</li><li>CatBoost</li><li>XGBoost</li><li>SHAP</li><li>Google Earth Engine</li><li>xarray</li><li>rasterio</li><li>PostgreSQL/PostGIS</li><li>R</li><li>rayshader</li></ul>
+
+<p class="case-cv"><a class="btn btn-solid" href="../../assets/cv/ABEL_DA_SILVA_CRUVINEL_CV_SENIOR_DATA_SCIENTIST_2026-11.pdf" download>Baixar CV (PDF)</a><a class="mail" href="mailto:abelsilva.eng@gmail.com">abelsilva.eng@gmail.com</a></p>
+</aside>
+</div>
+<nav class="case-nav" aria-label="Projetos de destaque"><div class="wrap"><a href="../../projetos/mapas-multimodais/index.html"><span>Anterior</span>Os 27 Mapas Multimodais oficiais, gerados a partir do banco</a><a href="../../projetos/bandit/index.html"><span>Próximo estudo de caso</span>Bandit: agente de IA no WhatsApp, em piloto na Unimontes</a></div></nav>
+</main>
+<footer class="foot"><div class="wrap foot-in">
+<p><strong>Abel da Silva Cruvinel</strong><br>Cientista de Dados Sênior, PhD</p>
+<p><a href="mailto:abelsilva.eng@gmail.com">abelsilva.eng@gmail.com</a><br><a href="https://www.linkedin.com/in/abeldasilvacruvinel/" rel="noopener">LinkedIn</a> <span aria-hidden="true">/</span> <a href="https://lattes.cnpq.br/5608090350420567" rel="noopener">Lattes</a></p>
+<p><a href="../../cv/index.html">Currículo completo</a><br><a href="../../assets/cv/ABEL_DA_SILVA_CRUVINEL_CV_SENIOR_DATA_SCIENTIST_2026-11.pdf" download>Baixar CV (PDF)</a></p>
+<p class="foot-note">Feito à mão em HTML, CSS e Python. Sem rastreadores.</p>
+</div></footer>
+<script src="../../assets/js/site.js" defer></script>
+</body>
+</html>

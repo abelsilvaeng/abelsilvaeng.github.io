@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Satellite crop yield forecasting: PIAT and a patent application | Abel da Silva Cruvinel</title>
+<meta name="description" content="A crop, climate and terrain data asset plus an in-house predictive model that estimates yield on cells of roughly 5.5 km instead of one number per municipalit">
+<link rel="canonical" href="https://abelsilvaeng.github.io/en/projetos/piat/">
+<link rel="alternate" hreflang="pt-BR" href="https://abelsilvaeng.github.io/projetos/piat/">
+<link rel="alternate" hreflang="en" href="https://abelsilvaeng.github.io/en/projetos/piat/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Satellite crop yield forecasting: PIAT and a patent application | Abel da Silva Cruvinel">
+<meta property="og:description" content="A crop, climate and terrain data asset plus an in-house predictive model that estimates yield on cells of roughly 5.5 km instead of one number per municipalit">
+<meta name="theme-color" content="#FAFAF7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F766E'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='16' font-weight='700' text-anchor='middle' fill='%23fff'%3EAC%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/css/site.css">
+</head>
+<body class="inner">
+<a class="skip" href="#conteudo">Skip to content</a>
+<header class="top"><div class="wrap top-in">
+<a class="brand" href="../../index.html">Abel da Silva Cruvinel</a>
+<nav class="top-nav" aria-label="Sections"><a href="../../index.html#trabalhos">Featured projects</a><a href="../../index.html#historico">Work history</a><a href="../../index.html#formacao">Education and research</a><a href="../../index.html#stack">Stack</a><a href="../../index.html#contato">Contact</a></nav>
+<div class="top-act"><div class="lang" role="group" aria-label="Language"><a href="../../../projetos/piat/index.html" hreflang="pt-BR" lang="pt-BR" title="Português">PT</a><span class="on" aria-current="true">EN</span></div><a class="btn btn-solid btn-sm" href="../../../assets/cv/ABEL_DA_SILVA_CRUVINEL_CV_SENIOR_DATA_SCIENTIST_2026-11_EN.pdf" download>Download CV</a></div>
+</div></header>
+<main id="conteudo" class="case">
+<header class="case-head"><div class="wrap">
+<p class="crumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="../../index.html#trabalhos">Featured projects</a><span aria-hidden="true">/</span><a href="../../index.html#xp-gfx">GFX GEO</a></p>
+<h1>Satellite crop yield forecasting: PIAT and a patent application</h1>
+<p class="lede">A crop, climate and terrain data asset plus an in-house predictive model that estimates yield on cells of roughly 5.5 km instead of one number per municipality.</p>
+<div class="case-top">
+<p class="case-num"><strong class="mono">0.63</strong><span>R² on unseen years: 0.631 for soybean and 0.634 for maize</span></p>
+<dl class="case-meta"><div><dt>Where</dt><dd>GFX GEO</dd></div><div><dt>Period</dt><dd class="mono">2019 - 2026</dd></div><div><dt>Role</dt><dd>Founder and engineer of record</dd></div></dl>
+</div>
+</div></header>
+<div class="wrap case-body">
+<div class="case-main">
+
+<section class="case-sec"><h2>Context</h2><p>Available crop forecasts in Brazil work at municipality or state level, so every farmer in the same municipality gets the same number. I built PIAT at GFX GEO for Centelha 3 MG, a startup program run by FAPEMIG (the Minas Gerais state research foundation), with a pilot covering 25 municipalities in the Alto Paranaíba region: soybean, maize and sorghum, 2001 to 2023 harvests.</p></section>
+<section class="case-sec"><h2>What I did</h2><ul><li>Built the data asset: crop production from IBGE/SIDRA (Brazil&#x27;s statistics bureau), climate from FLDAS and CHIRPS, MODIS vegetation and temperature, ANADEM terrain and MapBiomas crop fractions.</li><li>Designed a cell grid at CHIRPS resolution with weak supervision: labels are municipal, features are per cell.</li><li>Ran more than 30 experiment versions, each one fully traceable.</li><li>Found and fixed a methodological leak: selecting features outside the fold was inflating sorghum R² by about 0.13.</li><li>Used a placebo test to reject an apparent gain from soil variables.</li><li>Wrote the submission package: scientific document, technical annex, pitch, timeline and 3D maps.</li></ul></section>
+<section class="case-sec"><h2>How it works, in four stages</h2><ol class="flow" aria-label="How it works, in four stages"><li><h4>Data</h4><ul><li>IBGE/SIDRA</li><li>FLDAS and CHIRPS</li><li>MODIS</li><li>ANADEM and MapBiomas</li></ul></li><li><h4>Processing</h4><ul><li>Zonal extraction in Earth Engine</li><li>~5.5 km cell grid</li><li>Cropland mask</li></ul></li><li><h4>Model</h4><ul><li>ExtraTrees</li><li>Unseen-year validation</li><li>Placebo, SHAP and conformal</li></ul></li><li><h4>Product</h4><ul><li>Predicted yield maps</li><li>AI agent queried by coordinate (planned)</li></ul></li></ol></section>
+<section class="case-sec"><h2>Method</h2><ul><li>Leave-one-year-out temporal validation, with all preprocessing done inside the fold.</li><li>Placebo control: each candidate variable is tested against a shuffled copy of itself, across several seeds.</li><li>ExtraTrees with year as the technology trend; quantile-normal target transform for sorghum.</li><li>Shapley values (SHAP) for interpretation and conformal prediction for intervals.</li><li>Hydro-topographic proxies (TWI, slope) and crop-specific phenological windows.</li></ul></section>
+<section class="case-sec case-res"><h2>Result</h2><ul><li>R² on unseen years: 0.631 for soybean, 0.634 for maize and 0.490 for sorghum (Alto Paranaíba pilot).</li><li>Satellite-measured cropland fraction came out as the 2nd strongest driver for maize and the 3rd for soybean in SHAP.</li><li>Terrain does affect yield, but below the municipality scale: the municipal average washes it out.</li></ul></section>
+<section class="case-sec"><h2>Figures</h2><div class="figs figs-big"><figure><a href="../../../assets/img/gfx-geo/piat-f06.jpg"><img src="../../../assets/img/gfx-geo/piat-f06.jpg" alt="Predicted soybean yield on the cell grid, 2022/23 harvest." width="1044" height="908" loading="lazy" decoding="async"></a><figcaption>Predicted soybean yield on the cell grid, 2022/23 harvest.</figcaption></figure><figure><a href="../../../assets/img/gfx-geo/piat-f07.jpg"><img src="../../../assets/img/gfx-geo/piat-f07.jpg" alt="Observed versus predicted on years the model never saw." width="1400" height="397" loading="lazy" decoding="async"></a><figcaption>Observed versus predicted on years the model never saw.</figcaption></figure><figure><a href="../../../assets/img/gfx-geo/piat-f05.jpg"><img src="../../../assets/img/gfx-geo/piat-f05.jpg" alt="Rainfall, NDVI, land surface temperature and TWI per cell." width="1400" height="1400" loading="lazy" decoding="async"></a><figcaption>Rainfall, NDVI, land surface temperature and TWI per cell.</figcaption></figure><figure><a href="../../../assets/img/gfx-geo/piat-f09.jpg"><img src="../../../assets/img/gfx-geo/piat-f09.jpg" alt="What drives the soybean prediction, by Shapley values." width="936" height="663" loading="lazy" decoding="async"></a><figcaption>What drives the soybean prediction, by Shapley values.</figcaption></figure></div></section>
+<section class="case-sec case-pat"><h2>Patent application BR 10 2025 019783 9</h2><p>The application was filed on 16 September 2025, with the Federal University of Uberlândia as owner. Its registered title translates as &quot;Method for forecasting agricultural yield through automatic selection of climate variables derived from remote sensing&quot;. It is a filed application, not a granted patent, and the technical content only becomes public once INPI publishes it.</p><ul><li>Application filed: BR 10 2025 019783 9, invention patent</li><li>Filed with INPI on 16 September 2025</li><li>Owner: Federal University of Uberlândia</li></ul><p><a class="more" href="../../index.html#patente-inpi">See the application under Education and research</a></p></section>
+</div>
+<aside class="case-side">
+<h2>Stack</h2><ul class="tags"><li>Python</li><li>scikit-learn</li><li>LightGBM</li><li>CatBoost</li><li>XGBoost</li><li>SHAP</li><li>Google Earth Engine</li><li>xarray</li><li>rasterio</li><li>PostgreSQL/PostGIS</li><li>R</li><li>rayshader</li></ul>
+
+<p class="case-cv"><a class="btn btn-solid" href="../../../assets/cv/ABEL_DA_SILVA_CRUVINEL_CV_SENIOR_DATA_SCIENTIST_2026-11_EN.pdf" download>Download CV (PDF)</a><a class="mail" href="mailto:abelsilva.eng@gmail.com">abelsilva.eng@gmail.com</a></p>
+</aside>
+</div>
+<nav class="case-nav" aria-label="Featured projects"><div class="wrap"><a href="../../projetos/mapas-multimodais/index.html"><span>Previous</span>All 27 official Multimodal Maps, generated from the database</a><a href="../../projetos/bandit/index.html"><span>Next case study</span>Bandit: an AI agent on WhatsApp, piloting at Unimontes</a></div></nav>
+</main>
+<footer class="foot"><div class="wrap foot-in">
+<p><strong>Abel da Silva Cruvinel</strong><br>Senior Data Scientist, PhD</p>
+<p><a href="mailto:abelsilva.eng@gmail.com">abelsilva.eng@gmail.com</a><br><a href="https://www.linkedin.com/in/abeldasilvacruvinel/" rel="noopener">LinkedIn</a> <span aria-hidden="true">/</span> <a href="https://lattes.cnpq.br/5608090350420567" rel="noopener">Lattes</a></p>
+<p><a href="../../cv/index.html">Full CV</a><br><a href="../../../assets/cv/ABEL_DA_SILVA_CRUVINEL_CV_SENIOR_DATA_SCIENTIST_2026-11_EN.pdf" download>Download CV (PDF)</a></p>
+<p class="foot-note">Hand-built in HTML, CSS and Python. No trackers.</p>
+</div></footer>
+<script src="../../../assets/js/site.js" defer></script>
+</body>
+</html>
