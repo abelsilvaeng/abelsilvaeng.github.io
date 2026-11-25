@@ -1,4 +1,4 @@
-/* Portfólio v4: único comportamento é o filtro de projetos por tecnologia. */
+/* Portfólio v5: filtro legado (sem uso na home v5) e abertura de blocos expansíveis por âncora. */
 (function () {
   var list = document.getElementById('st-list');
   if (!list) return;
